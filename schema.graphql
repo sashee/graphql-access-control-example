@@ -1,0 +1,26 @@
+type User {
+	username: String!
+	friends: [User]
+	group_unsafe: Group
+	group: Group
+}
+
+type Group {
+	name: String
+	users: [User]
+}
+
+type Article {
+	text: String
+	author: User
+}
+
+type Query {
+	user(username: String!): User
+
+	allUsers: [User]
+	@aws_cognito_user_pools(cognito_groups: ["admin"])
+	@aws_auth(cognito_groups: ["admin"])
+
+	allArticles: [Article]
+}
